@@ -1,0 +1,80 @@
+/************************************************************************/
+/*                          冒泡排序                                            */
+/************************************************************************/
+
+#include "stdio.h"
+#include "stdlib.h"
+# include "time.h"
+#include "vld.h"
+#define MAXNUMBER 1000
+void GenerateRandomNum(int * pNum)//外部提供线性表地址，由外部负责释放
+{
+	if(pNum == NULL)
+		return;
+	srand((unsigned int)time(NULL));
+	int nLength = *pNum ;
+	int n = 1;
+	while(n <= nLength)
+	{		
+		*(++pNum) = rand();
+		n++;
+	}
+};
+void BubbleSort(int * pNum)
+{
+	//有小到大排序
+	int nLength = *pNum;
+
+	int nCompare = *pNum;
+	int * p = NULL;
+	int n = 1;
+	while(n <= nLength)
+	{
+		p = pNum;
+		//n == 1 , compare  length-1 
+		for(int _n=1;_n<= (nCompare-1);_n++)
+		{
+			if(*p > *(p+1))
+			{
+				int _intMax = *p;
+				*p = *(p+1);
+				*(p+1) = _intMax;
+			}
+			p++;
+		}
+		n++;
+		nCompare--;
+	}
+}
+void RealseBuffer(int* pNum)
+{
+	if(pNum){
+	free(pNum);
+	}
+}
+void main()
+{
+	int* pNumArray = (int*)malloc(sizeof(int)*(MAXNUMBER+1));
+	*pNumArray = MAXNUMBER;
+	GenerateRandomNum(pNumArray);
+	BubbleSort(pNumArray);
+	int n = 1;
+	int* p = pNumArray;
+	while(n<=MAXNUMBER)
+	{
+		printf("%d" , *pNumArray);
+		printf("   ");
+		pNumArray++;
+		n++;
+	}
+	RealseBuffer(p);
+	getchar();
+	n = 1;
+	while(n<=MAXNUMBER)
+	{
+		printf("%d" , *p);
+		p++;
+		n++;
+	}
+	getchar();
+}
